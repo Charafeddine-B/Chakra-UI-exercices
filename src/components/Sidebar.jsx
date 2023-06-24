@@ -4,6 +4,12 @@ import { color } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
+   console.warn("be carful");
+  console.info('some info');
+  console.error("fuck off");
+  console.trace('My log statement');
+
+
   return (
     <List color='white' fontSize='1.2em' spacing={4}>
         <ListItem>
@@ -27,7 +33,7 @@ export default function Sidebar() {
             </NavLink>
         </ListItem>
 
-    
+       
 
     </List>
   )

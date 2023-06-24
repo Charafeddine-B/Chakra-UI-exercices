@@ -1,6 +1,9 @@
-import { Heading,Text,Box,Container, SimpleGrid } from "@chakra-ui/react";
+import { Heading,Text,Box,Container, SimpleGrid, Card, CardBody, CardHeader, CardFooter, Flex } from "@chakra-ui/react";
+import { useLoaderData } from "react-router-dom";
 
 export default function Dashboard() {
+
+  const tasks = useLoaderData()
   const BoxStyles= {
     p:"10px",
     bg:"purple.400",
@@ -16,21 +19,30 @@ export default function Dashboard() {
   }
   return (
 
-    <SimpleGrid p="10px" spacing={10} minChildWidth={'250px'}>
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
+    <SimpleGrid spacing={10} minChildWidth={'300px'}>
+    {tasks && tasks.map(task =>(
+      
+      <Card key={task.id}>
+        <CardHeader>
+          <Flex>
+            <Box w="50px" h="50px">
+            <Text>AV</Text>
+            </Box>
+            <Box>
+              <Heading as ="h3" size="sm">{task.title}</Heading>
+              <Text>by {task.author}</Text>
+            </Box>
+          </Flex>
+        </CardHeader>
+        <CardBody color="gray.500">
+        {task.description}
+        </CardBody>
+        <CardFooter>
 
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
+        </CardFooter>
+      </Card>
+    ))}
 
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
-      <Box h="200px" bg="white" border='1px solid'></Box>
     </SimpleGrid>
     // <Container as='section' maxWidth="1080px" py="20px">
     //   <Heading my="30px" p="10px">Chakra Ui Components</Heading>
@@ -46,5 +58,12 @@ export default function Dashboard() {
     //   </Box>
 
     // </Container>
+   
   )
+  
+}
+
+export  const taskLoader = async () =>{
+const res = await fetch('http://localhost:9000/tasks')
+return res.json()
 }
